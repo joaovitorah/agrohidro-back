@@ -11,6 +11,12 @@ export async function profile(request: FastifyRequest, reply: FastifyReply) {
     },
   })
 
+  if (!user) {
+    return reply.status(404).send({
+      message: 'Usuário não encontrado',
+    })
+  }
+
   return reply.status(200).send({
     ...user,
     passwordHash: undefined,
