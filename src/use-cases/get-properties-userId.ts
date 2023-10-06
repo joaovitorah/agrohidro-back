@@ -7,11 +7,18 @@ interface NewPropertyUseCaseParams {
 export async function getPropertiesFromUserIdUseCase({
   userId,
 }: NewPropertyUseCaseParams) {
-  const properties = await prisma.properties.findMany({
+  const response = await prisma.user.findMany({
     where: {
-      userId,
+      id: userId,
+    },
+    select: {
+      properties: true,
     },
   })
 
-  return properties
+  if (!response) {
+    return null
+  }
+
+  return response[0].properties
 }
