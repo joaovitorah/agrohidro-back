@@ -8,10 +8,10 @@ import { register } from './controller/register-controller'
 export async function appRoutes(app: FastifyInstance) {
   app.post('/register', register)
   app.post('/login', login)
-  app.post('/profile', profile)
+  app.get('/profile', profile)
 
   app.post('/properties', newProperty)
-  app.get('/properties/:id', getPropertiesListFromUserId)
+  app.get('/properties', getPropertiesListFromUserId)
 
   app.get('/health', async () => {
     return 'ok'

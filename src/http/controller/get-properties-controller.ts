@@ -1,20 +1,17 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { getPropertiesFromUserIdUseCase } from '@/use-cases/get-properties-userId'
-import { z } from 'zod'
 
 export async function getPropertiesListFromUserId(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getProperties = z.object({
-    id: z.string(),
-  })
-
-  const { id } = getProperties.parse(request.params)
+  await request.jwtVerify()
 
   try {
-    const properties = await getPropertiesFromUserIdUseCase({ userId: id })
+    const properties = await getPropertiesFromUserIdUseCase({
+      userId: request.user.sub,
+    })
 
     return reply.status(200).send({
       properties,
