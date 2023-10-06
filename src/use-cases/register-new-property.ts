@@ -10,12 +10,13 @@ interface NewPropertyUseCaseParams {
     uf: string
     cep: string
     imageUrl: string
-    userId: string
   }
+  userId: string
 }
 
 export async function registerNewPropertyUseCase({
   data,
+  userId,
 }: NewPropertyUseCaseParams) {
   await prisma.property.create({
     data: {
@@ -27,7 +28,7 @@ export async function registerNewPropertyUseCase({
       uf: data.uf,
       cep: data.cep,
       imageUrl: data.imageUrl,
-      userId: data.userId,
+      userId,
     },
   })
 }

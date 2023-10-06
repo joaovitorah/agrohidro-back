@@ -7,6 +7,8 @@ export async function newProperty(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  await request.jwtVerify()
+
   const registerNewProperty = z.object({
     name: z.string(),
     nickname: z.string(),
@@ -16,13 +18,15 @@ export async function newProperty(
     uf: z.string(),
     cep: z.string(),
     imageUrl: z.string(),
-    userId: z.string(),
   })
 
   const registerData = registerNewProperty.parse(request.body)
 
   try {
-    await registerNewPropertyUseCase({ data: registerData })
+    await registerNewPropertyUseCase({
+      data: registerData,
+      userId: request.user.sub,
+    })
   } catch (error) {
     if (error instanceof Error) {
       return reply.status(401).send({
