@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { getPropertiesFromUserIdUseCase } from '@/use-cases/get-properties-userId'
+import { prisma } from '@/lib/prisma'
 
 export async function getPropertiesListFromUserId(
   request: FastifyRequest,
@@ -8,23 +8,19 @@ export async function getPropertiesListFromUserId(
 ) {
   await request.jwtVerify()
 
-  try {
-    const properties = await getPropertiesFromUserIdUseCase({
+  const properties = await prisma.property.findMany({
+    where: {
       userId: request.user.sub,
-    })
+    },
+  })
 
-    return reply.status(200).send({
-      properties,
+  if (!properties) {
+    return reply.status(404).send({
+      message: 'Não há propriedades cadastradas para este usuário.',
     })
-  } catch (error) {
-    if (error instanceof Error) {
-      return reply.status(401).send({
-        message: error.message,
-      })
-    }
   }
 
-  return reply.status(500).send({
-    message: 'Internal Server Error',
+  return reply.status(200).send({
+    properties,
   })
 }
