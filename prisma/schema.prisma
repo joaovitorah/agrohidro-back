@@ -46,6 +46,5 @@ model Property {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
 
-  @@index([userId], name: "userId")
   @@map("properties")
 }
