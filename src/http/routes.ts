@@ -1,5 +1,7 @@
 import { FastifyInstance } from 'fastify'
+import { deletePropertyById } from './controller/delete-property'
 import { getPropertiesListFromUserId } from './controller/get-properties-controller'
+import { getPropertyById } from './controller/get-property'
 import { login } from './controller/login-controller'
 import { newProperty } from './controller/new-property-controller'
 import { profile } from './controller/profile-controller'
@@ -16,4 +18,6 @@ export async function appRoutes(app: FastifyInstance) {
 
   app.post('/properties', newProperty)
   app.get('/properties', getPropertiesListFromUserId)
+  app.get('/properties/:id', getPropertyById)
+  app.delete('/properties/:id', deletePropertyById)
 }
