@@ -27,25 +27,83 @@ model User {
   createdAt                DateTime   @default(now())
   updatedAt                DateTime   @updatedAt
   properties               Property[]
+  consultationRequests     ConsultationRequest[]
 
   @@map("users")
 }
 
 model Property {
-  id          String   @id @default(uuid())
-  name        String
-  nickname    String
-  description String
-  carNumber   String
-  address     String
-  uf          String
-  cep         String
-  imageUrl    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  id             String              @id @default(uuid())
+  name           String
+  nickname       String
+  description    String
+  carNumber      String
+  address        String
+  uf             String
+  cep            String
+  imageUrl       String
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  userId         String
+  user           User                @relation(fields: [userId], references: [id])
+  financialData  FinancialData[]
+  fields         Field[]
+  plots          Plot[]
 
   @@index([userId])
   @@map("properties")
+}
+
+model FinancialData {
+  id         String    @id @default(uuid())
+  propertyId String
+  balance    Float
+  payable    Float
+  receivable Float
+  property   Property  @relation(fields: [propertyId], references: [id])
+
+  @@map("financial_data")
+}
+
+model Field {
+  id                String   @id @default(uuid())
+  propertyId        String
+  revenue           Float
+  expenses          Float
+  profit            Float
+  expectedRevenue   Float
+  totalExpenditure  Float
+  productionPerHa   Float
+  bags              Int
+  property          Property @relation(fields: [propertyId], references: [id])
+
+  @@map("fields")
+}
+
+model Plot {
+  id              String   @id @default(uuid())
+  name            String
+  area            Float
+  typeOfCoffee    String
+  typeOfSoil      String
+  numberOfPlants  Int
+  description     String
+  status          String
+  propertyId      String
+  property        Property @relation(fields: [propertyId], references: [id])
+
+  @@map("plots")
+}
+
+model ConsultationRequest {
+  id               String   @id @default(uuid())
+  fullName         String
+  telephone        String
+  email            String
+  propertyName     String
+  typeOfConsultancy String
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+
+  @@map("consultation_requests")
 }
