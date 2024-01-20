@@ -63,6 +63,7 @@ model FinancialData {
   property   Property  @relation(fields: [propertyId], references: [id])
 
   @@map("financial_data")
+  @@index([propertyId])
 }
 
 model Field {
@@ -78,6 +79,7 @@ model Field {
   property          Property @relation(fields: [propertyId], references: [id])
 
   @@map("fields")
+  @@index([propertyId])
 }
 
 model Plot {
@@ -93,6 +95,7 @@ model Plot {
   property        Property @relation(fields: [propertyId], references: [id])
 
   @@map("plots")
+  @@index([propertyId])
 }
 
 model ConsultationRequest {
@@ -106,4 +109,5 @@ model ConsultationRequest {
   user             User     @relation(fields: [userId], references: [id])
 
   @@map("consultation_requests")
+  @@index([userId])
 }
