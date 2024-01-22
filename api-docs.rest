@@ -1,0 +1,139 @@
+POST http://localhost:3333/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "phone": "1234567890",
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "zipcode": "12345",
+  "street": "Main Street",
+  "number": "123",
+  "complement": "Apartment 2",
+  "city": "Anytown",
+  "uf": "State",
+  "identifyProfile": "Farmer",
+  "mainAgriculturalActivity": "Crop Farming",
+  "hectaresCultivationArea": "50",
+  "haveInternetDailyAccess": "Yes"
+}
+
+###
+
+POST http://localhost:3333/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+
+###
+
+GET http://localhost:3333/profile
+Authorization: Bearer <token>
+
+###
+
+POST http://localhost:3333/properties
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Farm A",
+  "nickname": "Green Acres",
+  "description": "A small family farm",
+  "carNumber": "XYZ123",
+  "address": "123 Farm Lane",
+  "uf": "State",
+  "cep": "12345",
+  "imageUrl": "http://example.com/image.jpg"
+}
+
+###
+
+GET http://localhost:3333/properties
+Authorization: Bearer <token>
+
+###
+
+GET http://localhost:3333/properties/{id}
+Authorization: Bearer <token>
+
+###
+
+DELETE http://localhost:3333/properties/{id}
+Authorization: Bearer <token>
+
+###
+
+GET http://localhost:3333/properties/{id}/financial-data
+Authorization: Bearer <token>
+
+###
+
+GET http://localhost:3333/properties/{id}/fields
+Authorization: Bearer <token>
+
+###
+
+GET http://localhost:3333/properties/{id}/plots
+Authorization: Bearer <token>
+
+###
+
+POST http://localhost:3333/properties/{id}/plots
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Plot A",
+  "area": 100,
+  "typeOfCoffee": "Arabica",
+  "typeOfSoil": "Clay",
+  "numberOfPlants": 5000,
+  "description": "This is a description of Plot A.",
+  "status": "Active",
+  "propertyId": "uuid-of-the-property"
+}
+
+###
+
+PUT http://localhost:3333/properties/{propertyId}/plots/{plotId}
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Updated Plot Name",
+  "area": 120,
+  "typeOfCoffee": "Robusta",
+  "typeOfSoil": "Sandy",
+  "numberOfPlants": 6000,
+  "description": "Updated description of the plot.",
+  "status": "Inactive"
+}
+
+###
+
+DELETE http://localhost:3333/properties/{propertyId}/plots/{plotId}
+Authorization: Bearer <token>
+
+###
+
+POST http://localhost:3333/consultation-requests
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "fullName": "Jane Doe",
+  "telephone": "987654321",
+  "email": "janedoe@example.com",
+  "propertyName": "Farm B",
+  "typeOfConsultancy": "Agricultural",
+  "userId": "uuid-of-the-user"
+}
+
+###
+
+GET http://localhost:3333/consultation-requests
+Authorization: Bearer <token>
